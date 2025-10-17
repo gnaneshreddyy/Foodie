@@ -111,6 +111,7 @@
   letter-spacing: 0.3px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: border-color 0.3s;
+  overflow: hidden;
 }
 
 .food-veg-toggle:hover .food-toggle-track {
@@ -125,9 +126,9 @@
 
 .food-toggle-thumb {
   position: absolute;
-  left: 4px;
-  width: 64px;
-  height: 40px;
+  left: 6px;
+  width: 60px;
+  height: 36px;
   background: #ff6347;
   border-radius: 50px;
   transition: transform 0.25s ease;
@@ -135,7 +136,7 @@
 }
 
 .food-veg-toggle input:checked + .food-toggle-track .food-toggle-thumb {
-  transform: translateX(64px);
+  transform: translateX(60px);
 }
 
 .food-veg-toggle input:checked + .food-toggle-track .food-toggle-label:last-child {
