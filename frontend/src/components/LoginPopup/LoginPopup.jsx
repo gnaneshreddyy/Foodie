@@ -1,4 +1,3 @@
-// LoginPopup.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import './LoginPopup.css';
 import { assets } from '../../assets/frontend_assets/assets';

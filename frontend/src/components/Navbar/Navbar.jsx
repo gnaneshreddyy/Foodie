@@ -38,7 +38,6 @@ const Navbar = ({ setShowLogin, setIsLoggedIn }) => {
     setUser(storedUser);
   }, []);
 
-  // Listen for storage changes to update user state
   useEffect(() => {
     const handleStorageChange = () => {
       const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -100,7 +99,6 @@ const Navbar = ({ setShowLogin, setIsLoggedIn }) => {
     window.dispatchEvent(new Event('auth-changed'));
   };
   
-  // to trigger the dark theme on scroll bar
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
@@ -200,19 +198,14 @@ const Navbar = ({ setShowLogin, setIsLoggedIn }) => {
 
   return (
     <>
-      {/* Top Navigation Bar */}
       <div className={`navbar ${theme === "dark" ? "navbar-dark" : ""}`}>
-        {/* Logo */}
         <Link to="/" className="navbar-logo">
           <img src={assets.foodie_icon} alt="app icon" className="app-icon" />
         </Link>
 
-        {/* Desktop menu (center, hidden on mobile) */}
         <nav className="navbar-menu navbar-menu-desktop">{navMenu}</nav>
 
-        {/* Right action buttons */}
         <div className="navbar-right">
-          {/* Theme Toggle */}
           <button
             className="theme-toggle"
             onClick={toggleTheme}
@@ -221,7 +214,6 @@ const Navbar = ({ setShowLogin, setIsLoggedIn }) => {
             {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
           </button>
 
-          {/* Cart */}
           <div className="navbar-cart">
             <Link to="/cart" className="icon-button" aria-label="Go to cart">
               <ShoppingCart size={18} />
@@ -231,7 +223,6 @@ const Navbar = ({ setShowLogin, setIsLoggedIn }) => {
             </Link>
           </div>
 
-          {/* User / Auth */}
           {user ? (
             <div className="user-info" ref={userMenuRef}>
               <button className="user-avatar-button" onClick={() => setShowUserMenu((s) => !s)} aria-label="Open user menu">

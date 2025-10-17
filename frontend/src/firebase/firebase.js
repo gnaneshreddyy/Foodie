@@ -1,5 +1,3 @@
-// Firebase initialization module
-// Replace the placeholder config with your project's credentials
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
