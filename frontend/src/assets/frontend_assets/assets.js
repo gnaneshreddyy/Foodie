@@ -61,7 +61,7 @@ import bag_icon from './bag_icon.png'
 import logout_icon from './logout_icon.png'
 import parcel_icon from './parcel_icon.png'
 import appicon from './appicon.jpg'
-import google_icon from './google.png'
+import google_icon from './google_icon.png'
 
 import play_store_light from "./play_store_light.png"
 import app_store_light from "./app_store_light.jpg"
