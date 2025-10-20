@@ -6,11 +6,11 @@ import FoodItem from '../FoodItem/FoodItem';
 import { ChevronDown } from 'lucide-react';
 
 const FoodDisplay = ({ category }) => {
-  const { food_list } = useContext(StoreContext);
-  const [filterType, setFilterType] = useState('veg');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [sortOption, setSortOption] = useState('none');
-  const [showSortDropdown, setShowSortDropdown] = useState(false);
+const { food_list } = useContext(StoreContext);
+const [filterType, setFilterType] = useState('all'); // all | veg | non-veg
+const [searchQuery, setSearchQuery] = useState('');
+const [sortOption, setSortOption] = useState('none');
+const [showSortDropdown, setShowSortDropdown] = useState(false);
 
   const handleToggle = (type) => {
     setFilterType(type);
@@ -44,79 +44,53 @@ const FoodDisplay = ({ category }) => {
     setShowSortDropdown(false);
   };
 
+  // Apply sorting by price if requested
+  const sortedFoodList = [...filteredFoodList];
+  if (sortOrder === 'asc') {
+    sortedFoodList.sort((a, b) => a.price - b.price);
+  } else if (sortOrder === 'desc') {
+    sortedFoodList.sort((a, b) => b.price - a.price);
+  }
+
   return (
-    <div className="food-display">
-      <h4>Top Dishes Near You</h4>
-
-      <div className="food-display-controls">
-        {/* Search Bar */}
-        <div className="food-search-bar">
-          <img src={assets.search_icon} alt="Search" className="food-search-icon" />
-          <input
-            type="text"
-            placeholder="Search dishes..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="food-search-input"
-          />
-        </div>
-
-        {/* Right Controls Container */}
-        <div className="food-right-controls">
-          {/* Veg Toggle */}
-          <label className="food-veg-toggle">
-            <input
-              type="checkbox"
-              checked={filterType === 'veg'}
-              onChange={(e) => handleToggle(e.target.checked ? 'veg' : 'non-veg')}
-            />
-            <div className="food-toggle-track">
-              <span className="food-toggle-label">Non‐Veg</span>
-              <div className="food-toggle-thumb"></div>
-              <span className="food-toggle-label">Veg</span>
-            </div>
-          </label>
-
-          {/* Sort Dropdown */}
-          <div className="food-sort-dropdown-container">
-            <button 
-              className="food-sort-dropdown-btn"
-              onClick={() => setShowSortDropdown(!showSortDropdown)}
-            >
-              <span className="food-sort-label-text">
-                Sort By: <span className="food-sort-value">{getSortLabel()}</span>
-              </span>
-              <ChevronDown size={18} className={`food-chevron ${showSortDropdown ? "open" : ""}`} />
-            </button>
-            
-            {showSortDropdown && (
-              <div className="food-sort-dropdown-menu">
-                <button 
-                  className={`food-sort-option ${sortOption === 'none' ? "active" : ""}`}
-                  onClick={() => handleSortSelect('none')}
-                >
-                  Default
-                </button>
-                <button 
-                  className={`food-sort-option ${sortOption === 'price-asc' ? "active" : ""}`}
-                  onClick={() => handleSortSelect('price-asc')}
-                >
-                  Price: Low → High
-                </button>
-                <button 
-                  className={`food-sort-option ${sortOption === 'price-desc' ? "active" : ""}`}
-                  onClick={() => handleSortSelect('price-desc')}
-                >
-                  Price: High → Low
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
+    <div className='food-display' id='food-display'>
+      <h4 className="top-dishes-heading">Top Dishes Near You</h4>
+  {/* Toggle Buttons */}
+      <div className="filter-toggle">
+        <button
+          className={filterType === 'all' ? 'active' : ''}
+          onClick={() => handleToggle('all')}
+        >
+          All
+        </button>
+        <button
+          className={filterType === 'veg' ? 'active' : ''}
+          onClick={() => handleToggle('veg')}
+        >
+          Veg
+        </button>
+        <button
+          className={filterType === 'non-veg' ? 'active' : ''}
+          onClick={() => handleToggle('non-veg')}
+        >
+          Non-Veg
+        </button>
       </div>
-
-      <div className="food-display-list">
-        {filteredFoodList.map((item, index) => (
+      {/* Sort control */}
+      <div className="sort-control" style={{ margin: '12px 0' }}>
+        <label htmlFor="sort-select" style={{ marginRight: 8 }}>Sort by price:</label>
+        <select
+          id="sort-select"
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value)}
+        >
+          <option value="none">None</option>
+          <option value="asc">Low to High</option>
+          <option value="desc">High to Low</option>
+        </select>
+      </div>
+      <div className='food-display-list'>
+        {sortedFoodList.map((item, index) => (
           <FoodItem
             key={index}
             id={item._id}
